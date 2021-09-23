@@ -17,17 +17,17 @@ namespace ModernConcurrency
         [Test]
         public async Task ShouldFail()
         {
-            // Assert.ThrowsAsync<Exception>(async () => await Fail());
-            try
-            {
-                await Fail();
-                Assert.Fail("Should throw exception");
-            
-            }
-            catch (Exception e)
-            {
-                Assert.Pass("Exception caught");
-            }
+            Assert.ThrowsAsync<TestAsyncException>(async () => await Fail());
+            // try
+            // {
+            //     await Fail();
+            //     Assert.Fail("Should throw exception");
+            //
+            // }
+            // catch (Exception e)
+            // {
+            //     Assert.Pass("Exception caught");
+            // }
             
         }
 

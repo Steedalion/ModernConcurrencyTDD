@@ -10,21 +10,15 @@ namespace ModernConcurrency
         async Task<int> DownloadWithinSeconds(int timer, int taskDuration)
         {
             var cancel = new CancellationTokenSource(TimeSpan.FromMilliseconds(timer));
-            Task<int> download = new Task<int>(function: () =>
-            {
-                Task.Delay(taskDuration);
-                return taskDuration;
-            });
-            download.Start();
+            Task download = Task.Delay(taskDuration);
             Task timeoutTask = Task.Delay(Timeout.Infinite, cancel.Token);
-
             Task complete = await Task.WhenAny(timeoutTask, download);
             if (complete == timeoutTask)
             {
                 return -1;
             }
             
-            return await download;
+            return taskDuration;
         }
 
         [Test]
